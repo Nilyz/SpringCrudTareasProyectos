@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>Lista de Personas</title>
+        <link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" href="../static/css/styles.css"
+	th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Lista de Personas</h1>
+    <a href="/personas/crear" class="btn btn-primary mb-3">Crear Persona</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Email</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="persona : ${personas}">
+            <td th:text="${persona.id}"></td>
+            <td th:text="${persona.nombre}"></td>
+            <td th:text="${persona.apellidos}"></td>
+            <td th:text="${persona.email}"></td>
+            <td>
+                <a th:href="@{/personas/editar/{id}(id=${persona.id})}" class="btn btn-warning">Editar</a>
+                <a th:href="@{/personas/eliminar/{id}(id=${persona.id})}" class="btn btn-danger"
+                   onclick="return confirm('¿Estás seguro de que quieres eliminar esta persona?');">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
