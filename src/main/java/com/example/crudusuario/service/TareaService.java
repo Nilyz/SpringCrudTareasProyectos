@@ -22,10 +22,6 @@ public class TareaService {
         return tareaRepository.findById(id);
     }
 
-    public List<Tarea> obtenerTareasPorProyecto(Long proyectoId) {
-        return tareaRepository.findByProyectoId(proyectoId);
-    }
-
     public Tarea guardarTarea(Tarea tarea) {
         return tareaRepository.save(tarea);
     }

@@ -1,32 +1,40 @@
 package com.example.crudusuario.model;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Entity
-@Table(name = "tareas")
+@Table(name = "tareas") // Maps to the 'tareas' table
 public class Tarea {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incrementing primary key
 	private Long id;
 
-	@Column(nullable = false)
-	private String titulo; // Nombre correcto: titulo
+	@Column(nullable = false) //  'titulo' is required (not nullable)
+	private String titulo;
 
-	private String descripcion;
+	private String descripcion; // 'descripcion' is optional (nullable by default)
 
-	@Column(name = "fecha_limite") // Nombre de columna correcto: fecha_limite
-	@Temporal(TemporalType.DATE)
-	private Date fechaLimite; // Nombre correcto: fechaLimite y tipo Date
+	@Column(name = "fecha_limite") // Maps to 'fecha_limite' column in the table
+	@Temporal(TemporalType.DATE) // Stores only the date part
+	@DateTimeFormat(pattern = "yyyy-MM-dd") // For formatting date input/output
+	private Date fechaLimite;
 
-	@Enumerated(EnumType.STRING) // Ahora es un ENUM
-	private EstadoTarea estado; // Tipo correcto: EstadoTarea (ENUM)
+	@Enumerated(EnumType.STRING) // Stores enum values as Strings in the database
+	private EstadoTarea estado; // 'estado' is an enum of type EstadoTarea
 
-	@ManyToOne // Relación con Proyecto
-	@JoinColumn(name = "proyecto_id")
-	private Proyecto proyecto;
+	@ManyToOne // Many Tareas belong to one Proyecto
+	@JoinColumn(name = "proyecto_id") // Foreign key column in 'tareas' table is 'proyecto_id'
+	private Proyecto proyecto; //  References the Proyecto entity
 
+	public Tarea() {
+		// Default constructor
+	}
+
+	// Getters and Setters for all fields (id, titulo, descripcion, fechaLimite, estado, proyecto)
+	// ... (You already have these in your code, ensure they are present for all fields)
 
 	public Long getId() {
 		return id;
@@ -36,7 +44,7 @@ public class Tarea {
 		this.id = id;
 	}
 
-	public String getTitulo() { // Getter y Setter para titulo
+	public String getTitulo() {
 		return titulo;
 	}
 
@@ -52,7 +60,7 @@ public class Tarea {
 		this.descripcion = descripcion;
 	}
 
-	public Date getFechaLimite() { // Getter y Setter para fechaLimite
+	public Date getFechaLimite() {
 		return fechaLimite;
 	}
 
@@ -60,7 +68,7 @@ public class Tarea {
 		this.fechaLimite = fechaLimite;
 	}
 
-	public EstadoTarea getEstado() { // Getter y Setter para estado (ENUM)
+	public EstadoTarea getEstado() {
 		return estado;
 	}
 
