@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${proyecto.nombre}"></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${proyecto.nombre}"></h1>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Detalles del Proyecto</h5>
+            <p class="card-text"><strong>Descripción:</strong> <span th:text="${proyecto.descripcion}"></span></p>
+            <p class="card-text"><strong>Fecha de Inicio:</strong> <span th:text="${#dates.format(proyecto.fechaInicio, 'yyyy-MM-dd')}"></span></p>
+            <p class="card-text"><strong>Estado:</strong> <span th:text="${proyecto.estado}"></span></p>
+
+            <a th:href="@{/proyectos/editar/{id}(id=${proyecto.id})}" class="btn btn-info btn-sm">Editar Proyecto</a>
+            <a th:href="@{/proyectos/eliminar/{id}(id=${proyecto.id})}" class="btn btn-danger btn-sm"
+               onclick="return confirm('¿Estás seguro de que quieres eliminar este proyecto?');">Eliminar Proyecto</a>
+            <a th:href="@{/tareas/nueva(proyectoId=${proyecto.id})}" class="btn btn-primary btn-sm">Agregar Tarea</a>
+            <a th:href="@{/proyectos}" class="btn btn-secondary btn-sm">Volver a la Lista de Proyectos</a>
+        </div>
+    </div>
+
+    <h2 class="mt-4">Tareas del Proyecto</h2>
+    <div th:if="${not tareas.isEmpty()}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Fecha Límite</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tarea : ${tareas}">
+                <td th:text="${tarea.titulo}"></td>
+                <td th:text="${tarea.descripcion}"></td>
+                <td th:text="${#dates.format(tarea.fechaLimite, 'yyyy-MM-dd')}"></td>
+                <td th:text="${tarea.estado}"></td>
+                <td>
+                    <a th:href="@{/tareas/editar/{id}(id=${tarea.id})}" class="btn btn-info btn-sm">Editar</a>
+                    <a th:href="@{/tareas/eliminar/{id}(id=${tarea.id})}" class="btn btn-danger btn-sm"
+                       onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?');">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:unless="${not tareas.isEmpty()}">
+        <p>No hay tareas asignadas a este proyecto.</p>
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
