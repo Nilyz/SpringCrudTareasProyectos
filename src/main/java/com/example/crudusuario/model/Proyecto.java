@@ -1,42 +1,77 @@
 package com.example.crudusuario.model;
 
 import jakarta.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "personas")
+@Table(name = "proyectos")
 public class Proyecto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String nombre;
-    private String apellidos;
-    private String email;
+	@Column(nullable = false)
+	private String nombre;
+
+	private String descripcion;
+
+	@Column(name = "fecha_inicio", nullable = false)
+	@Temporal(TemporalType.DATE)
+	private Date fechaInicio;
+
+	@Enumerated(EnumType.STRING)
+	private EstadoProyecto estado;
+
+	@OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL)
+	private List<Tarea> tareas;
 
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getApellidos() {
-		return apellidos;
+
+	public String getDescripcion() {
+		return descripcion;
 	}
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
-	public String getEmail() {
-		return email;
+
+	public Date getFechaInicio() {
+		return fechaInicio;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public EstadoProyecto getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadoProyecto estado) {
+		this.estado = estado;
+	}
+
+	public List<Tarea> getTareas() {
+		return tareas;
+	}
+
+	public void setTareas(List<Tarea> tareas) {
+		this.tareas = tareas;
 	}
 }
-
