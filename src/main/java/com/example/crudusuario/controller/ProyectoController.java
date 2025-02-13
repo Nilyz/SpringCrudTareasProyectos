@@ -55,4 +55,10 @@ public class ProyectoController {
         model.addAttribute("tareas", tareas);
         return "proyectos/ver_proyecto";
     }
+
+    @GetMapping("/eliminar/{id}") // Changed to GetMapping for simplicity, consider DeleteMapping for RESTful API
+    public String eliminarProyecto(@PathVariable Long id) {
+        proyectoService.eliminarProyecto(id);
+        return "redirect:/proyectos"; // Redirige a la lista de proyectos tras eliminar
+    }
 }
