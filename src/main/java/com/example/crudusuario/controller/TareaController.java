@@ -20,20 +20,20 @@ public class TareaController {
     public String listarTareas(Model model) {
         List<Tarea> tareas = tareaService.obtenerTodasLasTareas();
         model.addAttribute("tareas", tareas);
-        return "tareas"; // Retorna la vista Thymeleaf "tareas.html"
+        return "listar_tareas"; // Ahora busca en templates/tareas/listar_tareas.html
     }
 
     @GetMapping("/{id}")
     public String verTarea(@PathVariable Long id, Model model) {
         Tarea tarea = tareaService.obtenerTareaPorId(id).orElse(null);
         model.addAttribute("tarea", tarea);
-        return "detalle_tarea"; // Vista detalle_tarea.html
+        return "tareas/detalle"; // Ahora busca en templates/tareas/detalle.html
     }
 
     @GetMapping("/nueva")
     public String nuevaTareaForm(Model model) {
         model.addAttribute("tarea", new Tarea());
-        return "form_tarea"; // Vista formulario tarea.html
+        return "tareas/agregar_tarea"; // Busca en templates/proyectos/agregar_tarea.html
     }
 
     @PostMapping("/guardar")

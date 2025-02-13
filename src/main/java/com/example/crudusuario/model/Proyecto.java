@@ -1,6 +1,7 @@
 package com.example.crudusuario.model;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class Proyecto {
 
 	@Column(name = "fecha_inicio", nullable = false)
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaInicio;
 
 	@Enumerated(EnumType.STRING)
@@ -26,6 +28,9 @@ public class Proyecto {
 
 	@OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL)
 	private List<Tarea> tareas;
+
+	public Proyecto() {
+	}
 
 	public Long getId() {
 		return id;
