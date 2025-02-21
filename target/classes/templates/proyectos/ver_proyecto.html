@@ -147,6 +147,7 @@
             <p class="card-text"><strong>Estado:</strong> <span th:text="${proyecto.estado}"></span></p>
 
             <a th:href="@{/tareas/nueva(proyectoId=${proyecto.id})}" class="btn btn-primary">Agregar Tarea</a>
+            <a th:href="@{/proyectos/editar/{id}(id=${proyecto.id})}" class="btn btn-primary btn-sm">Editar</a>
             <a th:href="@{/proyectos}" class="btn btn-secondary">Volver</a>
         </div>
     </div>
