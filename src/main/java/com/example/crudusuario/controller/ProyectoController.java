@@ -25,22 +25,22 @@ public class ProyectoController {
     @GetMapping("/nuevo")
     public String nuevoProyectoForm(Model model) {
         Proyecto proyecto = new Proyecto();
-        proyecto.setFechaInicio(new Date()); // Initialize fechaInicio
+        proyecto.setFechaInicio(new Date());
         model.addAttribute("proyecto", proyecto);
-        return "proyectos/agregar_proyectos"; // Correct template name: agregar_proyectos
+        return "proyectos/agregar_proyectos";
     }
 
     @PostMapping("/guardar")
     public String guardarProyecto(@ModelAttribute Proyecto proyecto) {
         proyectoService.guardarProyecto(proyecto);
-        return "redirect:/proyectos"; // Redirect to project list
+        return "redirect:/proyectos";
     }
 
     @GetMapping
     public String listarProyectos(Model model) {
         List<Proyecto> proyectos = proyectoService.obtenerTodosLosProyectos();
         model.addAttribute("proyectos", proyectos);
-        return "proyectos/lista_proyectos"; // Template for listing projects
+        return "proyectos/lista_proyectos";
     }
 
     @GetMapping("/{id}")
@@ -48,7 +48,6 @@ public class ProyectoController {
         Proyecto proyecto = proyectoService.obtenerProyectoPorId(id)
                 .orElseThrow(() -> new IllegalArgumentException("ID de proyecto inválido:" + id));
 
-        // Get tareas directly from the Proyecto object using the relationship
         List<Tarea> tareas = proyecto.getTareas();
 
         model.addAttribute("proyecto", proyecto);
@@ -56,10 +55,10 @@ public class ProyectoController {
         return "proyectos/ver_proyecto";
     }
 
-    @GetMapping("/eliminar/{id}") // Changed to GetMapping for simplicity, consider DeleteMapping for RESTful API
+    @GetMapping("/eliminar/{id}")
     public String eliminarProyecto(@PathVariable Long id) {
         proyectoService.eliminarProyecto(id);
-        return "redirect:/proyectos"; // Redirige a la lista de proyectos tras eliminar
+        return "redirect:/proyectos";
     }
 
     @GetMapping("/editar/{id}")
@@ -67,12 +66,12 @@ public class ProyectoController {
         Proyecto proyecto = proyectoService.obtenerProyectoPorId(id)
                 .orElseThrow(() -> new IllegalArgumentException("ID de proyecto inválido:" + id));
         model.addAttribute("proyecto", proyecto);
-        return "proyectos/editar_proyecto"; // Correct template name: editar_proyecto
+        return "proyectos/editar_proyecto";
     }
 
     @PostMapping("/actualizar")
     public String actualizarProyecto(@ModelAttribute Proyecto proyecto) {
-        proyectoService.guardarProyecto(proyecto); // Reutilizamos el método guardarProyecto para actualizar
-        return "redirect:/proyectos"; // Redirige a la lista de proyectos
+        proyectoService.guardarProyecto(proyecto);
+        return "redirect:/proyectos";
     }
 }

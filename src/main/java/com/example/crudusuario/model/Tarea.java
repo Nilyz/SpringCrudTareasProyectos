@@ -5,36 +5,35 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Entity
-@Table(name = "tareas") // Maps to the 'tareas' table
+@Table(name = "tareas")
 public class Tarea {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incrementing primary key
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false) //  'titulo' is required (not nullable)
+	@Column(nullable = false)
 	private String titulo;
 
-	private String descripcion; // 'descripcion' is optional (nullable by default)
+	private String descripcion;
 
-	@Column(name = "fecha_limite") // Maps to 'fecha_limite' column in the table
-	@Temporal(TemporalType.DATE) // Stores only the date part
-	@DateTimeFormat(pattern = "yyyy-MM-dd") // For formatting date input/output
+	@Column(name = "fecha_limite")
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaLimite;
 
-	@Enumerated(EnumType.STRING) // Stores enum values as Strings in the database
-	private EstadoTarea estado; // 'estado' is an enum of type EstadoTarea
+	@Enumerated(EnumType.STRING)
+	private EstadoTarea estado;
 
-	@ManyToOne // Many Tareas belong to one Proyecto
-	@JoinColumn(name = "proyecto_id") // Foreign key column in 'tareas' table is 'proyecto_id'
-	private Proyecto proyecto; //  References the Proyecto entity
+	@ManyToOne
+	@JoinColumn(name = "proyecto_id")
+	private Proyecto proyecto;
 
 	public Tarea() {
-		// Default constructor
+
 	}
 
-	// Getters and Setters for all fields (id, titulo, descripcion, fechaLimite, estado, proyecto)
-	// ... (You already have these in your code, ensure they are present for all fields)
+
 
 	public Long getId() {
 		return id;

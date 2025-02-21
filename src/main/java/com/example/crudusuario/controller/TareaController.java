@@ -25,11 +25,11 @@ public class TareaController {
     @GetMapping("/nueva")
     public String nuevaTareaForm(Model model) {
         Tarea tarea = new Tarea();
-        tarea.setFechaLimite(new Date()); // Initialize fechaLimite
-        List<Proyecto> proyectos = proyectoService.obtenerTodosLosProyectos(); // Get projects for dropdown
+        tarea.setFechaLimite(new Date());
+        List<Proyecto> proyectos = proyectoService.obtenerTodosLosProyectos();
 
         model.addAttribute("tarea", tarea);
-        model.addAttribute("proyectos", proyectos); // Add projects to the model
+        model.addAttribute("proyectos", proyectos);
         return "tareas/agregar_tarea";
     }
 
@@ -40,14 +40,14 @@ public class TareaController {
             tarea.setProyecto(proyecto);
             tareaService.guardarTarea(tarea);
         }
-        return "redirect:/proyectos"; // Redirect to project list after adding task
+        return "redirect:/proyectos";
     }
 
 
     @GetMapping("/eliminar/{id}")
     public String eliminarTarea(@PathVariable Long id) {
         tareaService.eliminarTarea(id);
-        return "redirect:/tareas"; // Redirect to task list
+        return "redirect:/tareas";
     }
 
     @GetMapping("/editar/{id}")
@@ -55,10 +55,10 @@ public class TareaController {
         Tarea tarea = tareaService.obtenerTareaPorId(id)
                 .orElseThrow(() -> new IllegalArgumentException("ID de tarea inválido:" + id));
 
-        List<Proyecto> proyectos = proyectoService.obtenerTodosLosProyectos(); // **Make sure this line is present**
+        List<Proyecto> proyectos = proyectoService.obtenerTodosLosProyectos();
 
         model.addAttribute("tarea", tarea);
-        model.addAttribute("proyectos", proyectos); // **And this line is present**
+        model.addAttribute("proyectos", proyectos);
         return "tareas/editar_tarea";
     }
 
@@ -67,8 +67,8 @@ public class TareaController {
         Proyecto proyecto = proyectoService.obtenerProyectoPorId(proyectoId).orElse(null);
         if (proyecto != null) {
             tarea.setProyecto(proyecto);
-            tareaService.guardarTarea(tarea); // Re-use guardarTarea to update
+            tareaService.guardarTarea(tarea);
         }
-        return "redirect:/proyectos"; // Redirect to project details
+        return "redirect:/proyectos";
     }
 }
