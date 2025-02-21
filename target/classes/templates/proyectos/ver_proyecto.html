@@ -147,8 +147,8 @@
             <p class="card-text"><strong>Estado:</strong> <span th:text="${proyecto.estado}"></span></p>
 
             <a th:href="@{/tareas/nueva(proyectoId=${proyecto.id})}" class="btn btn-primary">Agregar Tarea</a>
-            <a th:href="@{/proyectos/editar/{id}(id=${proyecto.id})}" class="btn btn-primary btn-sm">Editar</a>
-            <a th:href="@{/proyectos}" class="btn btn-secondary">Volver</a>
+            <a th:href="@{/proyectos/editar/{id}(id=${proyecto.id})}" class="btn btn-info btn-sm">Editar Proyecto</a>
+            <a th:href="@{/proyectos}" class="btn btn-secondary">Volver a Proyectos</a>
         </div>
     </div>
 
@@ -171,6 +171,7 @@
                 <td th:text="${#dates.format(tarea.fechaLimite, 'yyyy-MM-dd')}"></td>
                 <td th:text="${tarea.estado}"></td>
                 <td>
+                    <a th:href="@{/tareas/editar/{id}(id=${tarea.id})}" class="btn btn-primary btn-sm">Editar</a>
                     <a th:href="@{/tareas/eliminar/{id}(id=${tarea.id})}" class="btn btn-danger btn-sm"
                        onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?');">Eliminar</a>
                 </td>

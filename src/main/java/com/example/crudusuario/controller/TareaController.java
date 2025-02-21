@@ -49,4 +49,26 @@ public class TareaController {
         tareaService.eliminarTarea(id);
         return "redirect:/tareas"; // Redirect to task list
     }
+
+    @GetMapping("/editar/{id}")
+    public String editarTareaForm(@PathVariable Long id, Model model) {
+        Tarea tarea = tareaService.obtenerTareaPorId(id)
+                .orElseThrow(() -> new IllegalArgumentException("ID de tarea inválido:" + id));
+
+        List<Proyecto> proyectos = proyectoService.obtenerTodosLosProyectos(); // **Make sure this line is present**
+
+        model.addAttribute("tarea", tarea);
+        model.addAttribute("proyectos", proyectos); // **And this line is present**
+        return "tareas/editar_tarea";
+    }
+
+    @PostMapping("/actualizar")
+    public String actualizarTarea(@ModelAttribute Tarea tarea, @RequestParam("proyectoId") Long proyectoId) {
+        Proyecto proyecto = proyectoService.obtenerProyectoPorId(proyectoId).orElse(null);
+        if (proyecto != null) {
+            tarea.setProyecto(proyecto);
+            tareaService.guardarTarea(tarea); // Re-use guardarTarea to update
+        }
+        return "redirect:/proyectos"; // Redirect to project details
+    }
 }
